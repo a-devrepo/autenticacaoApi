@@ -1,0 +1,23 @@
+services:
+
+  autenticacaoapi-db:
+    image: postgres:16
+    container_name: autenticacaoapi-postgres
+    restart: always
+    ports:
+      - "5438:5432"
+    environment:
+      POSTGRES_DB: autenticacaoapidb
+      POSTGRES_USER: usuariosuser
+      POSTGRES_PASSWORD: usuariospassword
+    volumes:
+      - autenticacaoapidb-data:/var/lib/postgresql/data
+    networks:
+      - autenticacaoapidb-network
+    
+volumes:
+  autenticacaoapidb-data:
+
+networks:
+  autenticacaoapidb-network:
+    driver: bridge
