@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nca.domain.dtos.AutenticarUsuarioRequest;
-import br.com.nca.domain.dtos.AutenticarUsuarioResponse;
-import br.com.nca.domain.dtos.CriarUsuarioRequest;
-import br.com.nca.domain.dtos.CriarUsuarioResponse;
+import br.com.nca.domain.dtos.AutenticarUsuarioRequestDTO;
+import br.com.nca.domain.dtos.AutenticarUsuarioResponseDTO;
+import br.com.nca.domain.dtos.CriarUsuarioRequestDTO;
+import br.com.nca.domain.dtos.CriarUsuarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,7 +41,7 @@ public class UsuariosController {
                     description = "Usuário criado com sucesso",
                     content = @Content(
                         mediaType = "application/json",
-                        schema = @Schema(implementation = CriarUsuarioResponse.class)
+                        schema = @Schema(implementation = CriarUsuarioResponseDTO.class)
                     )
                 ),
                 @ApiResponse(
@@ -52,10 +52,10 @@ public class UsuariosController {
             }
         )
     @PostMapping("/criar")
-    public ResponseEntity<CriarUsuarioResponse> criar(
-            @Valid @RequestBody CriarUsuarioRequest criarUsuarioRequest){
+    public ResponseEntity<CriarUsuarioResponseDTO> criar(
+            @Valid @RequestBody CriarUsuarioRequestDTO criarUsuarioRequest){
        
-        var response = CriarUsuarioResponse.builder()
+        var response = CriarUsuarioResponseDTO.builder()
         .id(usuarioID)
         .nome(criarUsuarioRequest.getNome())
         .email(criarUsuarioRequest.getEmail())
@@ -75,7 +75,7 @@ public class UsuariosController {
                     description = "Autenticação bem-sucedida",
                     content = @Content(
                         mediaType = "application/json",
-                        schema = @Schema(implementation = AutenticarUsuarioResponse.class)
+                        schema = @Schema(implementation = AutenticarUsuarioResponseDTO.class)
                     )
                 ),
                 @ApiResponse(
@@ -86,10 +86,10 @@ public class UsuariosController {
             }
         )
     @PostMapping("/autenticar")
-    public ResponseEntity<AutenticarUsuarioResponse> autenticar(
-            @Valid @RequestBody AutenticarUsuarioRequest autenticarUsuarioRequest){
+    public ResponseEntity<AutenticarUsuarioResponseDTO> autenticar(
+            @Valid @RequestBody AutenticarUsuarioRequestDTO autenticarUsuarioRequest){
         
-        var response = AutenticarUsuarioResponse.builder()
+        var response = AutenticarUsuarioResponseDTO.builder()
                 .id(usuarioID)
                 .nome("user")
                 .email(autenticarUsuarioRequest.getEmail())
