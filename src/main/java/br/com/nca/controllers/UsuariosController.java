@@ -1,8 +1,5 @@
 package br.com.nca.controllers;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +11,7 @@ import br.com.nca.domain.dtos.AutenticarUsuarioRequestDTO;
 import br.com.nca.domain.dtos.AutenticarUsuarioResponseDTO;
 import br.com.nca.domain.dtos.CriarUsuarioRequestDTO;
 import br.com.nca.domain.dtos.CriarUsuarioResponseDTO;
+import br.com.nca.domain.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,10 +24,10 @@ import jakarta.validation.Valid;
 @Tag(name = "Usuários", description = "Endpoints para gerenciamento de usuários")
 public class UsuariosController {
 
-    private UUID usuarioID;
+    private UsuarioService usuarioService;
     
-    public UsuariosController() {
-        usuarioID = UUID.randomUUID();
+    public UsuariosController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
     
     @Operation(
@@ -53,14 +51,9 @@ public class UsuariosController {
         )
     @PostMapping("/criar")
     public ResponseEntity<CriarUsuarioResponseDTO> criar(
-            @Valid @RequestBody CriarUsuarioRequestDTO criarUsuarioRequest){
+            @Valid @RequestBody CriarUsuarioRequestDTO request){
        
-        var response = CriarUsuarioResponseDTO.builder()
-        .id(usuarioID)
-        .nome(criarUsuarioRequest.getNome())
-        .email(criarUsuarioRequest.getEmail())
-        .dataHoraCriacao(LocalDateTime.now())
-        .build();
+        var response = usuarioService.criarUsuario(request);
         
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
@@ -87,16 +80,10 @@ public class UsuariosController {
         )
     @PostMapping("/autenticar")
     public ResponseEntity<AutenticarUsuarioResponseDTO> autenticar(
-            @Valid @RequestBody AutenticarUsuarioRequestDTO autenticarUsuarioRequest){
+            @Valid @RequestBody AutenticarUsuarioRequestDTO request){
         
-        var response = AutenticarUsuarioResponseDTO.builder()
-                .id(usuarioID)
-                .nome("user")
-                .email(autenticarUsuarioRequest.getEmail())
-                .dataHoraAcesso(LocalDateTime.now())
-                .dataHoraExpiracao(LocalDateTime.now().plusHours(1))
-                .token("sldsldkoewirweirow003-203-2380392fsdfdslsldsk00920923029")
-                .build();
+        var response = usuarioService.autenticarUsuario(request);
+                
         return ResponseEntity
                 .status(HttpStatus.OK).body(response);
     }
