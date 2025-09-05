@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AutenticarUsuarioRequest {
+public class AutenticarUsuarioRequestDTO {
 
     @NotBlank(message = "Email é obrigatório.")
     @Email(message = "Email inválido.")

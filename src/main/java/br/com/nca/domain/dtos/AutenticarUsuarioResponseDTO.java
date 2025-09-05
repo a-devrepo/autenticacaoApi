@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AutenticarUsuarioResponse {
+public class AutenticarUsuarioResponseDTO {
 
     private UUID id;
     private String nome;

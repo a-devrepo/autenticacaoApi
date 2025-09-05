@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CriarUsuarioRequest {
+public class CriarUsuarioRequestDTO {
 
     @NotBlank(message = "Nome é obrigatório.")
     @Size(min = 6, max = 100, message = "Nome deve ter entre 6 e 100 caracteres.")

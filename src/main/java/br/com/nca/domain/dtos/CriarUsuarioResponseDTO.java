@@ -10,10 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CriarUsuarioResponse {
+public class CriarUsuarioResponseDTO {
 
     private UUID id;
     private String nome;
     private String email;
     private LocalDateTime dataHoraCriacao;
+    private String perfil;
 }
