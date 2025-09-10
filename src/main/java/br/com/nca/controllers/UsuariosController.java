@@ -43,9 +43,15 @@ public class UsuariosController {
                     )
                 ),
                 @ApiResponse(
-                    responseCode = "400",
+                    responseCode = "422",
                     description = "Dados inválidos",
                     content = @Content(mediaType = "application/json")
+                ),
+                @ApiResponse(
+                        responseCode = "409",
+                        description = "Email já cadastrado",
+                        content = @Content(
+                            mediaType = "application/json")
                 )
             }
         )
