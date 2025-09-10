@@ -26,9 +26,9 @@ public class DuplicateEmailExceptionHandler {
         var body = new HashMap<String, Object>();
         
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.UNPROCESSABLE_ENTITY.value());
+        body.put("status", HttpStatus.CONFLICT.value());
         body.put("message", exception.getMessage());
         
-        return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 }

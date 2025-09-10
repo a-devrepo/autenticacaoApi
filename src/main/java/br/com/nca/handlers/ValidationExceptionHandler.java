@@ -31,9 +31,9 @@ public class ValidationExceptionHandler {
         var body = new HashMap<String, Object>();
         
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("status", HttpStatus.UNPROCESSABLE_ENTITY.value());
         body.put("errors", errors);
         
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
