@@ -17,4 +17,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, UUID>{
             WHERE u.email = :pEmail
             """)
     Usuario findByUserEmail(@Param("pEmail") String email);
+    
+    @Query("""
+            SELECT u FROM Usuario u
+            WHERE u.email = :pEmail
+            AND u.senha = :pSenha
+            """)
+    Usuario findUserByEmailPassword(@Param("pEmail") String email,@Param("pSenha") String senha);
 }
