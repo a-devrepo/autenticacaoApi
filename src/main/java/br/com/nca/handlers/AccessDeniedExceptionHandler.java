@@ -1,32 +1,28 @@
 package br.com.nca.handlers;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import br.com.nca.domain.dtos.ApiErrorResponse;
 import br.com.nca.domain.exceptions.AccessDeniedException;
 
 @RestControllerAdvice
 public class AccessDeniedExceptionHandler {
  
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAccesDeniedException(
+    public ResponseEntity<ApiErrorResponse> handleAccesDeniedException(
             AccessDeniedException exception,
             WebRequest request) {
         
-        var body = new HashMap<String, Object>();
-        
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.UNAUTHORIZED.value());
-        body.put("message", exception.getMessage());
+        var body = ApiErrorResponse.builder().timeStamp(LocalDateTime.now())
+        .message(exception.getMessage())
+        .status(HttpStatus.UNAUTHORIZED.value())
+        .build();
         
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
