@@ -19,23 +19,27 @@ public class JWTHelper {
     @Value("${jwt.expiration}")
     private String jwtExpiration;
 
-    private Date currentDate = new Date();
+    private Date now() {
+        return new Date();
+    }
     
     public Date getExpiration() {
-        return new Date(currentDate.getTime() + Integer.parseInt(jwtExpiration));
+        return new Date(now().getTime() + Long.parseLong(jwtExpiration));
     }
     
     public Date getCurrentDate() {
-        return currentDate;
+        return now();
     }
     
     public String getToken(UUID userID) {
-        
+        Date issuedAt = now();
+        Date expiration = getExpiration();
+
         return Jwts.builder()
                 .setSubject(userID.toString())
-                .setIssuedAt(currentDate)
-                .setExpiration(getExpiration())
-                .signWith(SignatureAlgorithm.HS256,jwtSecret.getBytes(StandardCharsets.UTF_8))
+                .setIssuedAt(issuedAt)
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes(StandardCharsets.UTF_8))
                 .compact();
     }
 }
